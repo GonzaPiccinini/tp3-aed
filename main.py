@@ -122,18 +122,18 @@ def menu():
                 print("No hay envíos registrados. \n")
                 continue
             arreglo_envios = utils.ordenar_codigos_postales(arreglo_envios)
-            limite = input("Ingrese la cantidad de envíos que desea mostrar (0. mostrar todos): ")
+            m = input("Ingrese la cantidad de envíos que desea mostrar (0. mostrar todos): ")
             utils.limpiar_consola()
-            while not limite.isnumeric() or int(limite) > len(arreglo_envios):      
+            while not m.isnumeric() or int(m) > len(arreglo_envios):      
                 print(f"La cantidad debe ser un número y debe ser menor o igual a {len(arreglo_envios)}. \n") 
-                limite = input("Ingrese la cantidad de envíos que desea mostrar (0. mostrar todos): ")
-            if int(limite) != 0:
-                for i in range(0, int(limite)):
-                    print(f"País destino: {arreglo_envios[i].obtener_pais_destino()}, {arreglo_envios[i]}")
-                print("\nCantidad de envíos mostrados:", limite)
-            elif int(limite) == 0:
+                m = input("Ingrese la cantidad de envíos que desea mostrar (0. mostrar todos): ")
+            if int(m) != 0:
+                for i in range(0, int(m)):
+                    print(f"{arreglo_envios[i]}, país destino: {arreglo_envios[i].obtener_pais_destino()}")
+                print("\nCantidad de envíos mostrados:", m)
+            elif int(m) == 0:
                 for envio in arreglo_envios:
-                    print(envio)
+                    print(f"{envio}, país destino: {envio.obtener_pais_destino()}")
                 print("\nCantidad de envíos mostrados:", len(arreglo_envios))
             input("\n\nPresione una tecla para continuar...")
             utils.limpiar_consola()
