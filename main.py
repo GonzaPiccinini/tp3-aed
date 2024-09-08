@@ -38,16 +38,15 @@ def menu():
         if opcion == "1":
             utils.limpiar_consola()
             if (len(arreglo_envios) != 0):
-                adv = input("Se borrarán todos los envíos del arreglo y se generará un nuevo, ¿está seguro de su opción? (1. Sí - 0. No): ")
+                adv = input("Se borrarán todos los envíos del arreglo y se generará uno nuevo, ¿está seguro de su elección? (1. Sí - 0. No): ")
                 while not adv in "01":
                     utils.limpiar_consola()
                     print("Opción inválida. Por favor lea el menú de opciones disponibles. \n")
-                    adv = input("Se borrarán todos los envíos del arreglo y se generará un nuevo, ¿está seguro de su opción? (1. Sí - 0. No): ")
+                    adv = input("Se borrarán todos los envíos del arreglo y se generará uno nuevo, ¿está seguro de su elección? (1. Sí - 0. No): ")
                 if adv == "0":
                     utils.limpiar_consola()
                     continue
-            utils.limpiar_consola()
-            nombre_archivo = input("Ingrese el nombre del archivo: ")
+            nombre_archivo = "envios-tp3.txt"
             utils.limpiar_consola()
             if not os.path.exists(nombre_archivo):
                 print(f"El archivo '{nombre_archivo}' no existe. ")
@@ -67,36 +66,22 @@ def menu():
 
         if opcion == "2":
             utils.limpiar_consola()
-            print("El código postal debe contener entre 4 y 9 caracteres y sólo debe contener letras y números. \n")
+            print("El código postal debe contener hasta 9 caracteres.")
             cp = input("Ingrese el código postal: ")
-            while not 4 <= len(cp.strip()) <= 9 or not cp.strip().isalnum():
-                utils.limpiar_consola()
-                print("El código postal debe contener entre 4 y 9 caracteres y sólo debe contener letras y números. \n")
-                cp = input("Ingrese el código postal: ")
-            utils.limpiar_consola()
-            print("La dirección: \n" +
-                  "\t* Debe contener entre 6 y 20 caracteres \n" + 
+            print("\nLa dirección: \n" +
+                  "\t* Debe contener hasta 20 caracteres \n" + 
                   "\t* Debe contener sólo letras y números \n" +
                   "\t* No debe contener dos mayúsculas seguidas \n" + 
-                  "\t* Debe haber una palabra compuesta sólo por dígitos \n")
+                  "\t* Debe haber una palabra compuesta sólo por dígitos")
             direccion = input("Ingrese la dirección: ")
-            while not 6 <= len(direccion) <= 20 or not utils.validar_direccion(direccion + "."):
-                utils.limpiar_consola()
-                print("La dirección: \n" +
-                      "\t* Debe contener entre 6 y 20 caracteres \n" + 
-                      "\t* Debe contener sólo letras y números \n" +
-                      "\t* No debe contener dos mayúsculas seguidas \n" + 
-                      "\t* Debe haber una palabra compuesta sólo por dígitos \n")
-                direccion = input("Ingrese la dirección: ")
-            utils.limpiar_consola()
-            print("Tipos de envío disponibles: \n" +
+            print("\nTipos de envío disponibles: \n" +
                   "0. Carta Simple      - (peso < 20)         - $1100 \n" +
                   "1. Carta Simple      - (20 <= peso < 150)  - $1800 \n" +
                   "2. Carta Simple      - (150 <= peso < 500) - $2450 \n" +
                   "3. Carte certificada - (peso < 150)        - $8300 \n" +
                   "4. Carte certificada - (150 <= peso < 500) - $10900 \n" +
                   "5. Carta Expresa     - (peso < 150)        - $14300 \n" +
-                  "6. Carta Expresa     - (150 <= peso < 500) - $17900 \n")
+                  "6. Carta Expresa     - (150 <= peso < 500) - $17900")
             tipo = input("Ingrese el tipo de envío: ")
             while not tipo.isnumeric() or not tipo in "0123456":
                 utils.limpiar_consola()
@@ -107,21 +92,23 @@ def menu():
                       "3. Carte certificada - (peso < 150)        - $8300 \n" +
                       "4. Carte certificada - (150 <= peso < 500) - $10900 \n" +
                       "5. Carta Expresa     - (peso < 150)        - $14300 \n" +
-                      "6. Carta Expresa     - (150 <= peso < 500) - $17900 \n")
+                      "6. Carta Expresa     - (150 <= peso < 500) - $17900")
                 tipo = input("Ingrese el tipo de envío: ")
-            utils.limpiar_consola()
-            print("Formas de pago disponibles: ")
+            print("\nFormas de pago disponibles: ")
             print("1. Efectivo (10% de descuento) \n" +
-                  "2. Tarjeta de crédito \n")
+                  "2. Tarjeta de crédito")
             pago = input("Ingrese la forma de pago: ")
             while not pago.isnumeric() or not pago in "12":
                 utils.limpiar_consola()
                 print("La forma de pago debe ser un número y las opciones disponibles son: \n" +
                       "1. Efectivo (10% de descuento) \n" +
-                      "2. Tarjeta de crédito \n")
+                      "2. Tarjeta de crédito")
                 pago = input("Ingrese la forma de pago: ")
             utils.limpiar_consola()
-            arreglo_envios.append(envios.Envio(cp, direccion.strip() + ".", int(tipo), int(pago)))
+            if direccion[-1] != ".":
+                arreglo_envios.append(envios.Envio(cp, direccion.strip() + ".", int(tipo), int(pago)))
+            else: 
+                arreglo_envios.append(envios.Envio(cp, direccion.strip(), int(tipo), int(pago)))
             print(f"El envío [{arreglo_envios[-1]}] fue creado y agregado al arreglo de envíos correctamente.")
             input("\n\nPresione una tecla para continuar...")
             utils.limpiar_consola()
